@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Header from './Header';
 
 function App() {
 /*const name = "Andre";*/
@@ -11,12 +12,7 @@ return names[int];
 }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello, {handleNameChange()}!
-        </p>
-      </header>
+      <Header/>
     </div>
   );
 }
