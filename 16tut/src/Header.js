@@ -7,9 +7,9 @@ const Header = ({ title }) => {
     return (
         <header className="Header">
             <h1>{title}</h1>
-            {width < 768 ? <FaMobileAlt />
-                : width < 992 ? <FaTabletAlt />
-                    : <FaLaptop />}
+            {width < 768 ? <FaMobileAlt title="Mobile" />
+                : width < 992 ? <FaTabletAlt title="Tablet" />
+                    : <FaLaptop title="Laptop" />}
         </header>
     )
 }

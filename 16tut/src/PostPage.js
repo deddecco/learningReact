@@ -1,23 +1,16 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { useContext } from 'react';
-import api from './api/posts';
-import DataContext from './context/DataContext';
+import { useParams, Link, useNavigate } from "react-router-dom"; // <-- useNavigate, not useHistory
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const PostPage = () => {
-    const { posts, setPosts } = useContext(DataContext);
     const { id } = useParams();
-    const navigate = useNavigate();
-    const post = posts.find(post => (post.id).toString() === id);
+    const navigate = useNavigate(); // <-- useNavigate hook
+    const deletePost = useStoreActions((actions) => actions.deletePost);
+    const getPostById = useStoreState((state) => state.getPostById);
+    const post = getPostById(id);
 
-    const handleDelete = async (id) => {
-        try {
-            await api.delete(`/posts/${id}`);
-            const postsList = posts.filter(post => post.id !== id);
-            setPosts(postsList);
-            navigate('/');
-        } catch (err) {
-            console.log(`Error: ${err.message}`);
-        }
+    const handleDelete = (id) => {
+        deletePost(id);
+        navigate('/'); // <-- navigate instead of history.push
     }
 
     return (
@@ -31,10 +24,7 @@ const PostPage = () => {
                         <Link to={`/edit/${post.id}`}>
                             <button className="editButton">Edit Post</button>
                         </Link>
-                        <button
-                            className="deleteButton"
-                            onClick={() => handleDelete(post.id)}
-                        >
+                        <button className="deleteButton" onClick={() => handleDelete(post.id)}>
                             Delete Post
                         </button>
                     </>
@@ -49,7 +39,7 @@ const PostPage = () => {
                 )}
             </article>
         </main>
-    );
-};
+    )
+}
 
 export default PostPage;

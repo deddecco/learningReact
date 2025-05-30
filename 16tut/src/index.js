@@ -1,18 +1,18 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';  // Updated import
+import ReactDOM from 'react-dom/client'; // updated import
 import './index.css';
 import App from './App';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { StoreProvider } from 'easy-peasy';
+import store from './store';
 
-const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);  // Create root instance
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/*" element={<App />} />
-      </Routes>
-    </Router>
+    <StoreProvider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StoreProvider>
   </React.StrictMode>
 );
